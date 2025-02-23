@@ -1,6 +1,6 @@
 <?php
 // Database connection
-include '../../config/database.php';
+include '../config/database.php';
 session_start();
 
 // Handle Create, Update, and Delete operations
@@ -164,12 +164,12 @@ if (isset($_GET['id'])) {
                     <td class="px-6 py-3 border-b"><?php echo $row['date']; ?></td>
                     <td class="px-6 py-3 border-b"><?php echo $row['lane_no']; ?></td>
                     <td class="px-6 py-3 border-b">
-                        <!-- Update and Delete buttons -->
-                        <a href="assign_staff.php?id=<?php echo $row['id']; ?>" class="bg-black text-white px-4 py-1  ml-10 hover:bg-gray-600">Update</a>
-                        <form action="assign_staff.php" method="POST" class="inline-block">
-                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                            <button type="submit" name="delete" class="bg-red-600 text-white px-4 py-1 hover:bg-red-500">Delete</button>
-                        </form>
+						<!-- Update and Delete buttons -->
+						<a href="assign_staff.php?id=<?php echo $row['id']; ?>" class="bg-black text-white px-4 py-1 ml-10 hover:bg-gray-600">Update</a>
+						<form action="assign_staff.php" method="POST" class="inline-block" onsubmit="return confirmDelete()">
+						    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+						    <button type="submit" name="delete" class="bg-red-600 text-white px-4 py-1 hover:bg-red-500">Delete</button>
+						</form>
                     </td>
                 </tr>
                 <?php endwhile; ?>
@@ -177,6 +177,14 @@ if (isset($_GET['id'])) {
         </table>
     </div>
 </div>
+
+<script>
+    // This function will show a confirmation dialog when trying to delete an assignment
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this assignment?");
+    }
+</script>
+
 
 </body>
 </html>

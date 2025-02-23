@@ -137,18 +137,25 @@ if (isset($_GET['id'])) {
                     <td class="px-6 py-3 border-b"><?php echo $row['status']; ?></td>
                     <td class="px-6 py-3 border-b">
                         <!-- Update and Delete buttons -->
-                        <a href="vehicle.php?id=<?php echo $row['id']; ?>" class="bg-black text-white px-4 py-1  ml-10 hover:bg-gray-600">Update</a>
-                        <form action="vehicle.php" method="POST" class="inline-block">
+						<a href="vehicle.php?id=<?php echo $row['id']; ?>" class="bg-black text-white px-4 py-1  ml-10 hover:bg-gray-600">Update</a>
+                        <form action="vehicle.php" method="POST" class="inline-block" onsubmit="return confirmDelete()">
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                             <button type="submit" name="delete" class="bg-red-600 text-white px-4 py-1 hover:bg-red-500">Delete</button>
-                        </form>
-                    </td>
+                        </form>                    </td>
                 </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    // This function will show a confirmation dialog when trying to delete a vehicle
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this vehicle?");
+    }
+</script>
+
 
 </body>
 </html>
