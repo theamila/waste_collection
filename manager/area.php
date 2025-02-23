@@ -99,15 +99,24 @@ $areas = $conn->query("SELECT * FROM area");
                         </form>
 
                         <!-- Delete Form -->
-                        <form method="POST">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="id" value="<?= $area['id'] ?>">
-                            <button type="submit" class="bg-red-500 text-white px-4 py-1  ml-7 hover:bg-red-600">Delete</button>
-                        </form>
-                    </td>
+						<form method="POST" onsubmit="return confirmDelete()">
+						    <input type="hidden" name="action" value="delete">
+						    <input type="hidden" name="id" value="<?= $area['id'] ?>">
+						    <button type="submit" class="bg-red-500 text-white px-4 py-1 ml-7 hover:bg-red-600">Delete</button>
+						</form>                    </td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
     </table>
+    
+        <!-- JavaScript Confirmation Script -->
+    <script>
+        // Function to ask for deletion confirmation
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this area?");
+        }
+    </script>
+    
+    
 </body>
 </html>

@@ -74,6 +74,7 @@ if (isset($_GET['logout'])) {
         <!-- Separate Manage Managers Link -->
         <ul class="space-y-5 font-semibold flex-grow text-center text-lg mt-6">
           <li><a href="managers.php" class="block px-4 py-3 bg-blue-600 rounded-lg hover:bg-blue-700">Manage Managers</a></li>
+          <li><a href="garbage_status.php" class="block px-4 py-3 bg-blue-600 rounded-lg hover:bg-blue-700">Garbage Collection Status</a></li>
         </ul>
         <a href="?logout=true" class="block w-3/4 ml-9 px-4 text-center text-lg py-2 bg-red-600 text-white rounded hover:bg-red-800 mt-auto mb-6">Logout</a>
     </div>

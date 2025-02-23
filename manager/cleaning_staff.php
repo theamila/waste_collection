@@ -85,12 +85,14 @@ $result = $conn->query($sql);
                         <label for="name" class="block mb-2">Name</label>
                         <input type="text" name="name" id="name" required class="w-full p-2 border border-gray-300 rounded-lg" value="<?php echo isset($staff) ? $staff['name'] : ''; ?>">
                     </div>
-                    <div>
-                        <label for="mobile" class="block mb-2">Mobile</label>
-                        <input type="number" name="mobile" id="mobile" required class="w-full p-2 border border-gray-300 rounded-lg"
-                            value="<?php echo isset($staff) ? $staff['mobile'] : ''; ?>"
-                            placeholder="Enter mobile number (e.g., +94345678909)" min="1000000000" max="999999999999999" />
-                    </div>
+					<div>
+					    <label for="mobile" class="block mb-2">Mobile</label>
+					    <input type="text" name="mobile" id="mobile" required class="w-full p-2 border border-gray-300 rounded-lg"
+					        value="<?php echo isset($staff) ? $staff['mobile'] : ''; ?>"
+					        placeholder="Enter mobile number (e.g., +94345678909)" 
+					        pattern="^(0\d{9}|\+94\d{9})$" title="Phone number must be 10 digits starting with 0 or 12 digits starting with +94"
+					        />
+					</div>
                     <div>
                         <label for="type" class="block mb-2">Type</label>
                         <select name="type" id="type" required class="w-full p-2 border border-gray-300 rounded-lg">
@@ -131,19 +133,31 @@ $result = $conn->query($sql);
                     <td class="px-6 py-3 border-b"><?php echo $row['mobile']; ?></td>
                     <td class="px-6 py-3 border-b"><?php echo $row['type']; ?></td>
                     <td class="px-6 py-3 border-b">
-                        <!-- Update and Delete buttons -->
-                        <a href="cleaning_staff.php?id=<?php echo $row['id']; ?>" class="bg-black text-white px-4 py-1  ml-10 hover:bg-gray-600">Update</a>
-                        <form action="cleaning_staff.php" method="POST" class="inline-block">
-                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                            <button type="submit" name="delete" class="bg-red-600 text-white px-4 py-1 hover:bg-red-500">Delete</button>
-                        </form>
-                    </td>
+                       
+						<!-- Update and Delete buttons -->
+						<a href="cleaning_staff.php?id=<?php echo $row['id']; ?>" class="bg-black text-white px-4 py-1  ml-10 hover:bg-gray-600">Update</a>
+						<form action="cleaning_staff.php" method="POST" class="inline-block" onsubmit="return confirmDelete()">
+						    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+						    <button type="submit" name="delete" class="bg-red-600 text-white px-4 py-1 hover:bg-red-500">Delete</button>
+						</form>
+						                    </td>
                 </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
     </div>
 </div>
+
+
+<!-- Inline JavaScript Confirmation Script -->
+<script>
+    // Function to ask for deletion confirmation
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this cleaning staff?");
+    }
+</script>
+
+
 
 </body>
 </html>

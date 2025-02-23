@@ -8,7 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <style>
     body {
-      background-image: url('./assets/main_image.jpg');
+      background-image: url('./assets/main_img.jpg');
       background-size: cover;
       background-position: center;
     }
@@ -68,9 +68,9 @@
   </div>
 
   <!-- Main Content -->
-  <div class="flex-grow flex items-center justify-center text-white">
-    <h1 class="text-4xl font-bold px-4 py-3 uppercase outline ">Welcome to Municipal Council - Moratuwa</h1>
-  </div>
+  <!-- <div class="flex-grow flex items-center justify-center text-white">
+    <h1 class="text-4xl font-extrabold px-7 py-5 uppercase outline text-blue-800">Welcome to Municipal Council - Moratuwa</h1>  </div>-->
+  
 
   <script>
     // Function to toggle dropdown menus
