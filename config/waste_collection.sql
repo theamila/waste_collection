@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2024 at 09:22 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 7.4.30
+-- Generation Time: Feb 23, 2025 at 12:47 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +32,7 @@ CREATE TABLE `admin` (
   `username` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
@@ -52,17 +52,16 @@ CREATE TABLE `area` (
   `lane_no` varchar(50) NOT NULL,
   `description` text NOT NULL,
   `no_of_houses` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `area`
 --
 
 INSERT INTO `area` (`id`, `lane_no`, `description`, `no_of_houses`) VALUES
-(1, '26/A', 'Kaduwela', 17),
+(1, '26/B', 'Kaduwela', 17),
 (2, '26/A', 'Kaduwela', 10),
-(3, '26/C', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 20),
-(7, '26/ciawion', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 30);
+(3, '26/C', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 20);
 
 -- --------------------------------------------------------
 
@@ -76,16 +75,18 @@ CREATE TABLE `assign_staff` (
   `vehicle_no` varchar(50) NOT NULL,
   `date` date NOT NULL,
   `lane_no` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `assign_staff`
 --
 
 INSERT INTO `assign_staff` (`id`, `employee_no`, `vehicle_no`, `date`, `lane_no`) VALUES
-(1, 'E124', 'V001', '2024-12-12', '26/C'),
-(2, 'E121', 'V009', '2024-12-27', '26/C'),
-(4, 'E1222', 'V010', '2024-12-25', '26/C');
+(5, 'E120', 'V001', '2025-02-10', '26/B'),
+(7, 'E121', 'V002', '2025-02-15', '26/C'),
+(8, 'E121', 'V002', '2025-02-15', '26/C'),
+(9, 'E121', 'V002', '2025-02-15', '26/C'),
+(11, 'E121', 'V002', '2025-02-15', '26/C');
 
 -- --------------------------------------------------------
 
@@ -99,16 +100,39 @@ CREATE TABLE `cleaning_staff` (
   `name` varchar(100) NOT NULL,
   `mobile` varchar(15) NOT NULL,
   `type` enum('Collector','Driver') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `cleaning_staff`
 --
 
 INSERT INTO `cleaning_staff` (`id`, `employee_no`, `name`, `mobile`, `type`) VALUES
-(1, 'E121', 'Saman Kumara Rajakaruna', '1496848486', 'Driver'),
-(10, 'E1222', 'Esitqwqha kwwqw', '1496848486', 'Collector'),
-(16, 'E124', 'afasfasf', '1496848486', 'Driver');
+(1, 'E121', 'Saman Kumara Rajakaruna', '+94719796759', 'Driver'),
+(17, 'E120', 'Dilshan Kumara', '0718987654', 'Collector'),
+(26, 'E100', 'Dumindu Silva', '0719876541', 'Driver'),
+(27, 'E99', 'Nimal Kumara', '0719876543', 'Collector');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `garbage_collection_status`
+--
+
+CREATE TABLE `garbage_collection_status` (
+  `date` date NOT NULL,
+  `lane_no` varchar(50) NOT NULL,
+  `house_no` varchar(50) NOT NULL,
+  `remaining_weight` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `garbage_collection_status`
+--
+
+INSERT INTO `garbage_collection_status` (`date`, `lane_no`, `house_no`, `remaining_weight`) VALUES
+('2024-07-26', '1', 'H-123', 450),
+('2024-07-26', '2', 'H-456', 790),
+('2024-07-27', '1', 'H-789', 350);
 
 -- --------------------------------------------------------
 
@@ -124,7 +148,7 @@ CREATE TABLE `household_registration` (
   `address` text NOT NULL,
   `mobile_number` varchar(15) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `household_registration`
@@ -132,7 +156,8 @@ CREATE TABLE `household_registration` (
 
 INSERT INTO `household_registration` (`id`, `name`, `lane_no`, `house_no`, `address`, `mobile_number`, `password`) VALUES
 (7, 'Esitha Jayawardana', '26/ciawion', '196/1', 'Samagi mw, Malagoda', '0123445664', 'aaa'),
-(11, 'vsdvsd', '26/A', 'vsdvsdv', 'dvdvsdvs', 'sdvsdv', 'dsvsdv');
+(11, 'vsdvsd', '26/A', 'vsdvsdv', 'dvdvsdvs', 'sdvsdv', 'dsvsdv'),
+(12, 'Sujani', '26/A', '13', 'No.13, Nagala, Bibile', '0719796759', 'suja');
 
 -- --------------------------------------------------------
 
@@ -144,7 +169,7 @@ CREATE TABLE `managers` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `managers`
@@ -152,7 +177,8 @@ CREATE TABLE `managers` (
 
 INSERT INTO `managers` (`id`, `username`, `password`) VALUES
 (1, 'manager1@m.com', 'aaa'),
-(2, 'manager2@m.com', 'aaa');
+(2, 'manager2@m.com', 'aaa'),
+(3, 'ama@yahoo.com', 'ama');
 
 -- --------------------------------------------------------
 
@@ -167,7 +193,7 @@ CREATE TABLE `schedule` (
   `day` varchar(50) NOT NULL,
   `week` enum('Every week','First week','Second week','Third week','Fourth week') NOT NULL,
   `vehicle_no` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `schedule`
@@ -176,10 +202,9 @@ CREATE TABLE `schedule` (
 INSERT INTO `schedule` (`id`, `lane_no`, `garbage_type`, `day`, `week`, `vehicle_no`) VALUES
 (3, '26/C', 'E-waste', '2024-12-20', 'Third week', 'V001'),
 (4, '26/A', 'Plastic', '2024-12-19', 'Every week', 'V001'),
-(5, '26/A', 'Plastic', '2024-12-19', 'Every week', 'V001'),
-(6, '26/A', 'Plastic', '2024-12-19', 'Every week', 'V001'),
+(5, '26/A', 'Biodegradable', '2024-12-19', 'Every week', 'V001'),
 (7, '26/A', 'Plastic', '2024-12-19', 'Every week', 'V001'),
-(8, '26/ciawion', 'Plastic', '2025-01-21', 'Second week', 'V001');
+(9, '26/B', 'Plastic', '2025-02-18', 'First week', 'V001');
 
 -- --------------------------------------------------------
 
@@ -193,7 +218,7 @@ CREATE TABLE `vehicle` (
   `capacity` int(11) NOT NULL,
   `date` date NOT NULL,
   `status` enum('Available','Out of service','In service') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `vehicle`
@@ -201,11 +226,9 @@ CREATE TABLE `vehicle` (
 
 INSERT INTO `vehicle` (`id`, `vehicle_no`, `capacity`, `date`, `status`) VALUES
 (1, 'V001', 5000, '2024-12-13', 'Available'),
-(2, 'V002', 1200, '2022-05-10', 'Out of service'),
+(2, 'V002', 1200, '2022-05-10', 'Available'),
 (3, 'V003', 1500, '2024-03-02', 'In service'),
 (4, 'V005', 1100, '2023-07-25', 'Out of service'),
-(5, 'V008', 950, '2024-01-01', 'Out of service'),
-(6, 'V009', 1050, '2023-02-28', 'Available'),
 (7, 'V010', 1200, '2024-04-10', 'In service');
 
 --
@@ -280,31 +303,31 @@ ALTER TABLE `area`
 -- AUTO_INCREMENT for table `assign_staff`
 --
 ALTER TABLE `assign_staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `cleaning_staff`
 --
 ALTER TABLE `cleaning_staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `household_registration`
 --
 ALTER TABLE `household_registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `managers`
 --
 ALTER TABLE `managers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `vehicle`
