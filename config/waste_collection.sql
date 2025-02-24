@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2025 at 12:47 PM
+-- Generation Time: Feb 24, 2025 at 02:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -120,8 +120,11 @@ INSERT INTO `cleaning_staff` (`id`, `employee_no`, `name`, `mobile`, `type`) VAL
 
 CREATE TABLE `garbage_collection_status` (
   `date` date NOT NULL,
+  `time` time NOT NULL,
   `lane_no` varchar(50) NOT NULL,
-  `house_no` varchar(50) NOT NULL,
+  `bin_no` varchar(50) NOT NULL,
+  `unit_no` int(11) NOT NULL,
+  `phone_number` text NOT NULL,
   `remaining_weight` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -129,10 +132,12 @@ CREATE TABLE `garbage_collection_status` (
 -- Dumping data for table `garbage_collection_status`
 --
 
-INSERT INTO `garbage_collection_status` (`date`, `lane_no`, `house_no`, `remaining_weight`) VALUES
-('2024-07-26', '1', 'H-123', 450),
-('2024-07-26', '2', 'H-456', 790),
-('2024-07-27', '1', 'H-789', 350);
+INSERT INTO `garbage_collection_status` (`date`, `time`, `lane_no`, `bin_no`, `unit_no`, `phone_number`, `remaining_weight`) VALUES
+('2024-07-29', '08:00:00', '1', '115-197-142-244', 1, '0714992904', 350),
+('2024-07-29', '09:30:00', '2', '35-129-119-15', 2, '0768040960', 600),
+('2024-07-29', '11:00:00', '1', '115-197-142-200', 1, '0719796759', 200),
+('2024-07-29', '13:00:00', '3', '35-129-119-150', 3, '0714992904', 750),
+('2024-07-29', '15:30:00', '2', '115-197-142-288', 2, '0714992904', 400);
 
 -- --------------------------------------------------------
 
@@ -145,6 +150,7 @@ CREATE TABLE `household_registration` (
   `name` varchar(255) NOT NULL,
   `lane_no` varchar(50) NOT NULL,
   `house_no` varchar(50) NOT NULL,
+  `bin_no` varchar(50) NOT NULL,
   `address` text NOT NULL,
   `mobile_number` varchar(15) NOT NULL,
   `password` varchar(255) NOT NULL
@@ -154,10 +160,11 @@ CREATE TABLE `household_registration` (
 -- Dumping data for table `household_registration`
 --
 
-INSERT INTO `household_registration` (`id`, `name`, `lane_no`, `house_no`, `address`, `mobile_number`, `password`) VALUES
-(7, 'Esitha Jayawardana', '26/ciawion', '196/1', 'Samagi mw, Malagoda', '0123445664', 'aaa'),
-(11, 'vsdvsd', '26/A', 'vsdvsdv', 'dvdvsdvs', 'sdvsdv', 'dsvsdv'),
-(12, 'Sujani', '26/A', '13', 'No.13, Nagala, Bibile', '0719796759', 'suja');
+INSERT INTO `household_registration` (`id`, `name`, `lane_no`, `house_no`, `bin_no`, `address`, `mobile_number`, `password`) VALUES
+(7, 'Esitha Jayawardana', '26/ciawion', '196/1', '0', 'Samagi mw, Malagoda', '0123445664', 'aaa'),
+(11, 'vsdvsd', '26/A', 'vsdvsdv', '0', 'dvdvsdvs', 'sdvsdv', 'dsvsdv'),
+(12, 'Sujani', '26/A', '13', '0', 'No.13, Nagala, Bibile', '0719796759', 'suja'),
+(13, 'su', '26/B', '13', '0', 'No.13, Pattiyawaththa, Nagala, Bibile', '0719796759', 'suja');
 
 -- --------------------------------------------------------
 
@@ -315,7 +322,7 @@ ALTER TABLE `cleaning_staff`
 -- AUTO_INCREMENT for table `household_registration`
 --
 ALTER TABLE `household_registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `managers`
