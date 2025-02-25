@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2025 at 02:09 PM
+-- Generation Time: Feb 25, 2025 at 05:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -50,6 +50,7 @@ INSERT INTO `admin` (`id`, `username`, `email`, `password`) VALUES
 CREATE TABLE `area` (
   `id` int(11) NOT NULL,
   `lane_no` varchar(50) NOT NULL,
+  `unit_no` int(5) NOT NULL,
   `description` text NOT NULL,
   `no_of_houses` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -58,10 +59,11 @@ CREATE TABLE `area` (
 -- Dumping data for table `area`
 --
 
-INSERT INTO `area` (`id`, `lane_no`, `description`, `no_of_houses`) VALUES
-(1, '26/B', 'Kaduwela', 17),
-(2, '26/A', 'Kaduwela', 10),
-(3, '26/C', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 20);
+INSERT INTO `area` (`id`, `lane_no`, `unit_no`, `description`, `no_of_houses`) VALUES
+(11, '20/C', 3, 'Kaduwela', 37),
+(13, '21/A', 4, 'Kiribathgoda', 60),
+(15, '20/A', 5, 'Kiribathgoda', 43),
+(16, '20/B', 6, 'Kiribathgoda', 43);
 
 -- --------------------------------------------------------
 
@@ -121,10 +123,7 @@ INSERT INTO `cleaning_staff` (`id`, `employee_no`, `name`, `mobile`, `type`) VAL
 CREATE TABLE `garbage_collection_status` (
   `date` date NOT NULL,
   `time` time NOT NULL,
-  `lane_no` varchar(50) NOT NULL,
   `bin_no` varchar(50) NOT NULL,
-  `unit_no` int(11) NOT NULL,
-  `phone_number` text NOT NULL,
   `remaining_weight` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -132,12 +131,12 @@ CREATE TABLE `garbage_collection_status` (
 -- Dumping data for table `garbage_collection_status`
 --
 
-INSERT INTO `garbage_collection_status` (`date`, `time`, `lane_no`, `bin_no`, `unit_no`, `phone_number`, `remaining_weight`) VALUES
-('2024-07-29', '08:00:00', '1', '115-197-142-244', 1, '0714992904', 350),
-('2024-07-29', '09:30:00', '2', '35-129-119-15', 2, '0768040960', 600),
-('2024-07-29', '11:00:00', '1', '115-197-142-200', 1, '0719796759', 200),
-('2024-07-29', '13:00:00', '3', '35-129-119-150', 3, '0714992904', 750),
-('2024-07-29', '15:30:00', '2', '115-197-142-288', 2, '0714992904', 400);
+INSERT INTO `garbage_collection_status` (`date`, `time`, `bin_no`, `remaining_weight`) VALUES
+('2024-07-29', '08:00:00', '115-197-142-244', 350),
+('2024-07-29', '09:30:00', '35-129-119-15', 600),
+('2024-07-29', '11:00:00', '115-197-142-200', 200),
+('2024-07-29', '13:00:00', '35-129-119-150', 750),
+('2024-07-29', '15:30:00', '115-197-142-288', 400);
 
 -- --------------------------------------------------------
 
@@ -163,8 +162,8 @@ CREATE TABLE `household_registration` (
 INSERT INTO `household_registration` (`id`, `name`, `lane_no`, `house_no`, `bin_no`, `address`, `mobile_number`, `password`) VALUES
 (7, 'Esitha Jayawardana', '26/ciawion', '196/1', '0', 'Samagi mw, Malagoda', '0123445664', 'aaa'),
 (11, 'vsdvsd', '26/A', 'vsdvsdv', '0', 'dvdvsdvs', 'sdvsdv', 'dsvsdv'),
-(12, 'Sujani', '26/A', '13', '0', 'No.13, Nagala, Bibile', '0719796759', 'suja'),
-(13, 'su', '26/B', '13', '0', 'No.13, Pattiyawaththa, Nagala, Bibile', '0719796759', 'suja');
+(12, 'Sujani', '26/A', '13', '35-129-119-15', 'No.13, Nagala, Bibile', '94719796759', 'suja'),
+(13, 'su', '26/B', '13', '115-197-142-244', 'No.13, Pattiyawaththa, Nagala, Bibile', '94772288579', 'suja');
 
 -- --------------------------------------------------------
 
@@ -239,62 +238,6 @@ INSERT INTO `vehicle` (`id`, `vehicle_no`, `capacity`, `date`, `status`) VALUES
 (7, 'V010', 1200, '2024-04-10', 'In service');
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `area`
---
-ALTER TABLE `area`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `assign_staff`
---
-ALTER TABLE `assign_staff`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `employee_no` (`employee_no`),
-  ADD KEY `vehicle_no` (`vehicle_no`);
-
---
--- Indexes for table `cleaning_staff`
---
-ALTER TABLE `cleaning_staff`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `employee_no` (`employee_no`);
-
---
--- Indexes for table `household_registration`
---
-ALTER TABLE `household_registration`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `managers`
---
-ALTER TABLE `managers`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `schedule`
---
-ALTER TABLE `schedule`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `vehicle`
---
-ALTER TABLE `vehicle`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `vehicle_no` (`vehicle_no`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -304,7 +247,7 @@ ALTER TABLE `vehicle`
 -- AUTO_INCREMENT for table `area`
 --
 ALTER TABLE `area`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `assign_staff`
