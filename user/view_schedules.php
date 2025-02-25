@@ -1,6 +1,6 @@
 <?php 
 // Database connection
-include '../config/database.php';
+include '../../config/database.php';
 session_start();
 
 // Check if user is logged in
@@ -39,11 +39,15 @@ $result = $conn->query($sql);
             <a href="?logout=true" class="text-white bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700">Log Out</a>
         </div>
 
-        <!-- Search Form -->
-        <div class="mb-6">
-            <input type="text" id="search" placeholder="Search schedules..." class="px-4 py-2 rounded-lg w-1/4 border border-gray-300 " />
-        </div>
-
+       		 <!-- Search Form -->
+			<div class="mb-6 flex items-center h-[48px]">  <input type="text" id="search" placeholder="Search schedules..." class="px-6 py-3 rounded-lg w-1/4 border border-gray-300 mr-20 h-full" />  
+				<ul class="font-semibold text-lg">
+       			 	<li>
+            			<a href="https://mon-backend.azurewebsites.net/worldmap/" class="block px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"> See Live Location </a>
+        			</li>
+   			 	</ul>
+			</div> 
+				
         <!-- Display schedules -->
         <div id="schedules">
             <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
