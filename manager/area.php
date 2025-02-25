@@ -14,26 +14,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'create') {
         $lane_no = $_POST['lane_no'];
+        $unit_no = $_POST['unit_no'];  // Make sure this input exists in your form
         $description = $_POST['description'];
         $no_of_houses = $_POST['no_of_houses'];
-        $query = $conn->prepare("INSERT INTO area (lane_no, description, no_of_houses) VALUES (?, ?, ?)");
-        $query->bind_param('ssi', $lane_no, $description, $no_of_houses);
+        $query = $conn->prepare("INSERT INTO area (lane_no, unit_no, description, no_of_houses) VALUES (?, ?, ?, ?)"); // Four placeholders
+        $query->bind_param('sssi', $lane_no, $unit_no, $description, $no_of_houses); // Four values bound
         $query->execute();
-    } elseif ($action === 'update') {
-        $id = $_POST['id'];
-        $lane_no = $_POST['lane_no'];
-        $description = $_POST['description'];
-        $no_of_houses = $_POST['no_of_houses'];
-        $query = $conn->prepare("UPDATE area SET lane_no = ?, description = ?, no_of_houses = ? WHERE id = ?");
-        $query->bind_param('ssii', $lane_no, $description, $no_of_houses, $id);
-        $query->execute();
-    } elseif ($action === 'delete') {
+        
+   		} elseif ($action === 'update') {
+        $id = $_POST['update_id'];
+        $lane_no = $_POST['update_lane_no'];
+        $unit_no = $_POST['update_unit_no'];
+        $description = $_POST['update_description'];
+        $no_of_houses = $_POST['update_no_of_houses'];
+
+        $query = $conn->prepare("UPDATE area SET lane_no = ?, unit_no = ?, description = ?, no_of_houses = ? WHERE id = ?");
+
+        if ($query) { // Correctly nested if
+            $query->bind_param('sssis', $lane_no, $unit_no, $description, $no_of_houses, $id);
+            $result = $query->execute();
+
+            if (!$result) {
+                error_log("Update failed: " . $query->error . " SQL: UPDATE area SET lane_no = '$lane_no', unit_no = '$unit_no', description = '$description', no_of_houses = $no_of_houses WHERE id = $id");
+            }
+
+            $query->close();
+        } else { // Correct else block
+            error_log("Prepare failed: " . $conn->error . " SQL: UPDATE area SET lane_no = ?, unit_no = ?, description = ?, no_of_houses = ? WHERE id = ?");
+        } // End of if ($query)
+
+    } // End of elseif ($action === 'update')  <- Important!
+
+    elseif ($action === 'delete') { // Correctly aligned with other actions
         $id = $_POST['id'];
         $query = $conn->prepare("DELETE FROM area WHERE id = ?");
         $query->bind_param('i', $id);
         $query->execute();
-    }
-}
+    } // End of elseif ($action === 'delete')
+} // End of if ($_SERVER['REQUEST_METHOD'] === 'POST')
+
+
 
 // Fetch Areas
 $areas = $conn->query("SELECT * FROM area");
@@ -63,8 +83,9 @@ $areas = $conn->query("SELECT * FROM area");
     <!-- Create Form -->
     <form method="POST" class="mb-4">
         <input type="hidden" name="action" value="create">
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-4 gap-4">
             <input type="text" name="lane_no" placeholder="Lane No" class="border rounded-lg px-3 py-2" required>
+            <input type="text" name="unit_no" placeholder="Unit No" class="border rounded-lg px-3 py-2" required>
             <input type="text" name="description" placeholder="Description" class="border rounded-lg px-3 py-2" required>
             <input type="number" name="no_of_houses" placeholder="No. of Houses" class="border rounded-lg px-3 py-2" required>
         </div>
@@ -76,6 +97,7 @@ $areas = $conn->query("SELECT * FROM area");
         <thead>
             <tr class="bg-orange-500">
                 <th class="border px-4 py-2 text-white">Lane No</th>
+                <th class="border px-4 py-2 text-white">Unit No</th>
                 <th class="border px-4 py-2 text-white">Description</th>
                 <th class="border px-4 py-2 text-white">No. of Houses</th>
                 <th class="border px-4 py-2 text-white">Actions</th>
@@ -85,25 +107,37 @@ $areas = $conn->query("SELECT * FROM area");
             <?php while ($area = $areas->fetch_assoc()): ?>
                 <tr>
                     <td class="border px-4 py-2"><?= $area['lane_no'] ?></td>
+                    <td class="border px-4 py-2"><?= $area['unit_no'] ?></td>
                     <td class="border px-4 py-2"><?= $area['description'] ?></td>
                     <td class="border px-3 py-2"><?= $area['no_of_houses'] ?></td>
-                    <td class="border px-4 py-2 flex space-x-2">
+                    <td class="border px-3 py-2 flex space-x-2">
+                    
                         <!-- Update Form -->
                         <form method="POST" class="flex">
                             <input type="hidden" name="action" value="update">
-                            <input type="hidden" name="id" value="<?= $area['id'] ?>">
-                            <input type="text" name="lane_no" value="<?= $area['lane_no'] ?>" class="border rounded-lg px-2 py-1" required>
-                            <input type="text" name="description" value="<?= $area['description'] ?>" class="border rounded-lg px-2 py-1" required>
-                            <input type="number" name="no_of_houses" value="<?= $area['no_of_houses'] ?>" class="border rounded-lg px-2 py-1" required>
-                            <button type="submit" class="bg-black text-white px-4 py-1  ml-10 hover:bg-gray-600">Update</button>
+                            <input type="hidden" name="update_id" value="<?= $area['id'] ?>">  
+                            <input type="text" name="update_lane_no" value="<?= $area['lane_no'] ?>" class="border rounded-lg px-2 py-1 w-30" required>
+                            <input type="text" name="update_unit_no" value="<?= $area['unit_no'] ?>" class="border rounded-lg px-2 py-1 w-30" required> 
+                            <input type="text" name="update_description" value="<?= $area['description'] ?>" class="border rounded-lg px-2 py-1 w-30" required>
+                            <input type="number" name="update_no_of_houses" value="<?= $area['no_of_houses'] ?>" class="border rounded-lg px-2 py-1 w-30" required>
+                            <button type="submit" class="bg-black text-white px-4 py-1 ml-10 hover:bg-gray-600">Update</button>
                         </form>
 
-                        <!-- Delete Form -->
-						<form method="POST" onsubmit="return confirmDelete()">
-						    <input type="hidden" name="action" value="delete">
+                        <form method="POST" onsubmit="return confirmDelete()">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="id" value="<?= $area['id'] ?>">
+                            <button type="submit" class="bg-red-500 text-white px-4 py-1 ml-7 hover:bg-red-600">Delete</button>
+                        </form>
+                        						
+						<!-- Send Message -->
+						<form method="POST" onsubmit="return confirmSend()">
+						    <input type="hidden" name="action" value="">
 						    <input type="hidden" name="id" value="<?= $area['id'] ?>">
-						    <button type="submit" class="bg-red-500 text-white px-4 py-1 ml-7 hover:bg-red-600">Delete</button>
-						</form>                    </td>
+						    <button type="submit" class="bg-red-500 text-white px-4 py-1 ml-7 hover:bg-red-600">Send</button>
+						</form> 
+
+                  
+					</td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
