@@ -51,6 +51,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query->bind_param('i', $id);
         $query->execute();
     } // End of elseif ($action === 'delete')
+elseif ($action === 'send') { // Correctly aligned with other actions
+        $id = $_POST['id'];
+        $query = $conn->prepare("SELECT * FROM area WHERE id = ?");
+        $query->bind_param('i', $id);
+        $query->execute();
+
+	$url = 'https://app.notify.lk/api/v1/send?user_id=29099&api_key=04Q0g5ASxkJa6Y4IAWmf&sender_id=NotifyDEMO&to=94773604795&message=Test';
+	$data = file_get_contents($url);		     
+    } // End of elseif ($action === 'send')
+	
 } // End of if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
 
