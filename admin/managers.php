@@ -1,6 +1,6 @@
 <?php
 // Database connection
-include '../../config/database.php';
+include '../config/database.php';
 session_start();
 
 // Fetch manager details if updating
