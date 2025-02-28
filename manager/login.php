@@ -1,5 +1,5 @@
 <?php
-include '../config/database.php';
+include '../../config/database.php';
 session_start();
 
 // Handle login
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
         <form method="POST">
             <div class="mb-4">
-                <label class="block">Username</label>
+                <label class="block">Email</label>
                 <input type="text" name="username" class="w-full border rounded-lg px-3 py-2" required>
             </div>
             <div class="mb-6">

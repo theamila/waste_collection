@@ -3,21 +3,16 @@
 include '../config/database.php';
 session_start();
 
+// Fetch garbage status with household details
+$sql = "SELECT gcs.date, gcs.time, gcs.bin_no, gcs.remaining_weight, hr.lane_no, hr.house_no FROM garbage_collection_status gcs JOIN household_registration hr ON gcs.bin_no = hr.bin_no";
 
-// Start building the query
-$sql = "SELECT date, time, bin_no, CASE WHEN remaining_weight < 400 THEN 'Empty' ELSE GREATEST(remaining_weight - 300, 0) END AS remaining_weight FROM garbage_collection_status WHERE 1=1 ";
-
-
-// Prepare the statement *AFTER* building the complete SQL query
-$stmt = $conn->prepare($sql);
-
-
-$stmt->execute();
-$result = $stmt->get_result();// Fetch garbage statusfor listing
-$sql = "SELECT date, time, bin_no, CASE WHEN remaining_weight < 400 THEN 'Empty' ELSE GREATEST(remaining_weight - 300, 0) END AS remaining_weight FROM garbage_collection_status";
 $result = $conn->query($sql);
-?>
 
+if (!$result) {
+    die("Error fetching data: " . $conn->error); // Added error handling
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,61 +35,60 @@ $result = $conn->query($sql);
             <h1 class="text-3xl font-bold text-blue-500">Garbage Collection Status</h1>
         </div>
 
-
-        <!-- Display status -->
         <h3 class="text-2xl font-bold text-blue-500 mb-4">Collection Status</h3>
-        
-        <!-- Search Form -->
-		<div class="mb-6 flex items-center h-[48px]">  <input type="text" id="search" placeholder="Search schedules..." class="px-6 py-3 rounded-lg w-1/4 border border-gray-300 mr-20 h-full" />  
-		</div> 
 
+        <div class="mb-6 flex items-center h-[48px]">
+            <input type="text" id="search" placeholder="Search..." class="px-6 py-3 rounded-lg w-1/4 border border-gray-300 mr-20 h-full" />
+        </div>
 
-
-        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">           
-         	<thead>
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <thead>
                 <tr class="bg-blue-500">
                     <th class="px-6 py-3 border-b text-white">Date</th>
                     <th class="px-6 py-3 border-b text-white">Time</th>
                     <th class="px-6 py-3 border-b text-white">Bin No</th>
-                    <th class="px-6 py-3 border-b text-white">Remaining Weight</th>
+                    <th class="px-6 py-3 border-b text-white">Lane No</th>
+                    <th class="px-6 py-3 border-b text-white">House No</th>
+                    <th class="px-6 py-3 border-b text-white">Remaining Weight(g)</th>
                 </tr>
             </thead>
             <tbody>
-               <?php while ($row = $result->fetch_assoc()): ?>
-               <tr class="table-row">  <td class="px-6 py-3 border-b"><?php echo $row['date']; ?></td>
-                   <td class="px-6 py-3 border-b"><?php echo $row['time']; ?></td>
-                   <td class="px-6 py-3 border-b"><?php echo $row['bin_no']; ?></td>
-                   <td class="px-6 py-3 border-b"><?php echo $row['remaining_weight']; ?></td>
-               </tr>
-             <?php endwhile; 
-             ?>            
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr class="table-row">
+                        <td class="px-6 py-3 border-b text-center"><?php echo $row['date']; ?></td>                        
+                        <td class="px-6 py-3 border-b text-center "><?php echo $row['time']; ?></td>
+                        <td class="px-6 py-3 border-b text-center"><?php echo $row['bin_no']; ?></td>
+                        <td class="px-6 py-3 border-b text-center"><?php echo $row['lane_no']; ?></td>
+                        <td class="px-6 py-3 border-b text-center"><?php echo $row['house_no']; ?></td>
+                        <td class="px-6 py-3 border-b text-center"><?php echo $row['remaining_weight']; ?></td>
+                    </tr>
+                <?php endwhile; ?>
             </tbody>
-
         </table>
     </div>
 </div>
 
+<script>
+    document.getElementById('search').addEventListener('keyup', function() {
+        const searchText = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.table-row');
 
-    <script>
-        document.getElementById('search').addEventListener('keyup', function() {
-            const searchText = this.value.toLowerCase();
-            const rows = document.querySelectorAll('.table-row'); // Select by the correct class
+        rows.forEach(function(row) {
+            const date = row.children[0].textContent.toLowerCase();
+            const time = row.children[1].textContent.toLowerCase();
+            const bin_no = row.children[2].textContent.toLowerCase();
+            const lane_no = row.children[3].textContent.toLowerCase();
+            const house_no = row.children[4].textContent.toLowerCase();
+            const remaining_weight = row.children[5].textContent.toLowerCase();
 
-            rows.forEach(function(row) {
-                const date = row.children[0].textContent.toLowerCase();
-                const time = row.children[1].textContent.toLowerCase(); // Get time as well
-                const bin_no = row.children[2].textContent.toLowerCase();
-                const remaining_weight = row.children[3].textContent.toLowerCase(); // Corrected index
-
-                if (date.includes(searchText) || time.includes(searchText) || bin_no.includes(searchText) || remaining_weight.includes(searchText)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
+            if (date.includes(searchText) || time.includes(searchText) || bin_no.includes(searchText) || lane_no.includes(searchText) || house_no.includes(searchText) || remaining_weight.includes(searchText)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
         });
-    </script>
-
+    });
+</script>
 
 </body>
 </html>

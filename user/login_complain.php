@@ -20,11 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = $result->fetch_assoc();
         if ($password === $row['password']) { // Plain-text password check (use hashing in production)
             $_SESSION['login'] = $row['email']; // Set the session variable
-            //Debug info
-            //var_dump($_SESSION);
-            //echo "login success";
-            header("Location: update_user.php");
-            exit;
+            header("Location: login_complain.php"); // Corrected path (adjust as needed)
+            exit; // Important: Stop further script execution
         } else {
             $error = "Invalid email or password. Please try again.";
         }
@@ -47,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body class="bg-green-500 flex items-center justify-center min-h-screen">
 
     <div class="absolute top-20 left-32">
-        <a href="../user/main_login.php" class="flex items-center text-white hover:text-black text-2xl font-bold">
+        <a href="../user/index.php" class="flex items-center text-white hover:text-black text-2xl font-bold">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="h-6 w-6 mr-2 mt-1">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M11 19l-7-7 7-7M4 12h16" />
             </svg>

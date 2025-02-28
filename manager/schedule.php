@@ -1,6 +1,6 @@
 <?php 
 // Database connection
-include '../config/database.php';
+include '../../config/database.php';
 session_start();
 
 // Handle Create, Update, and Delete operations
@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $lane_no = $_POST['lane_no'];
         $garbage_type = $_POST['garbage_type'];
         $day = $_POST['date'];
-        $week = $_POST['week'];
+        // $week = $_POST['week'];
         $vehicle_no = $_POST['vehicle_no'];
 
-        $sql = "INSERT INTO schedule (lane_no, garbage_type, day, week, vehicle_no)
-                VALUES ('$lane_no', '$garbage_type', '$day', '$week', '$vehicle_no')";
+        $sql = "INSERT INTO schedule (lane_no, garbage_type, day, vehicle_no)
+                VALUES ('$lane_no', '$garbage_type', '$day', '$vehicle_no')";
         $conn->query($sql);
     } elseif (isset($_POST['update'])) {
         // Update operation
@@ -22,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $lane_no = $_POST['lane_no'];
         $garbage_type = $_POST['garbage_type'];
         $day = $_POST['date'];
-        $week = $_POST['week'];
+        // $week = $_POST['week'];
         $vehicle_no = $_POST['vehicle_no'];
 
-        $sql = "UPDATE schedule SET lane_no='$lane_no', garbage_type='$garbage_type', day='$day', week='$week', vehicle_no='$vehicle_no'
+        $sql = "UPDATE schedule SET lane_no='$lane_no', garbage_type='$garbage_type', day='$day', vehicle_no='$vehicle_no'
                 WHERE id=$id";
         $conn->query($sql);
     } elseif (isset($_POST['delete'])) {
@@ -121,7 +121,7 @@ if (isset($_GET['id'])) {
                             <?php endwhile; ?>
                         </select>
                     </div>
-                    <div>
+                    <!-- <div>
                         <label for="week" class="block mb-2">Week</label>
                         <select name="week" id="week" required class="w-full p-2 border border-gray-300 rounded-lg">
                             <option value="" disabled selected>Select an option</option>    
@@ -131,7 +131,7 @@ if (isset($_GET['id'])) {
                             <option value="Third week" <?php echo ($schedule && $schedule['week'] == 'Third week') ? 'selected' : ''; ?>>Third week</option>
                             <option value="Fourth week" <?php echo ($schedule && $schedule['week'] == 'Fourth week') ? 'selected' : ''; ?>>Fourth week</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div>
                         <label for="date" class="block mb-2">Date</label>
                         <input type="date" name="date" id="date" required class="w-full p-2 border border-gray-300 rounded-lg" value="<?php echo $schedule ? $schedule['day'] : ''; ?>">
@@ -156,7 +156,7 @@ if (isset($_GET['id'])) {
                     <th class="px-6 py-3 border-b text-white">Lane No</th>
                     <th class="px-6 py-3 border-b text-white">Garbage Type</th>
                     <th class="px-6 py-3 border-b text-white">Vehicle No</th>
-                    <th class="px-6 py-3 border-b text-white">Week</th>
+                    <!-- <th class="px-6 py-3 border-b text-white">Week</th> -->
                     <th class="px-6 py-3 border-b text-white">Date</th>
                     <th class="px-6 py-3 border-b text-white">Actions</th>
                 </tr>
@@ -167,7 +167,7 @@ if (isset($_GET['id'])) {
                     <td class="px-6 py-3 border-b"><?php echo $row['lane_no']; ?></td>
                     <td class="px-6 py-3 border-b"><?php echo $row['garbage_type']; ?></td>
                     <td class="px-6 py-3 border-b"><?php echo $row['vehicle_no']; ?></td>
-                    <td class="px-6 py-3 border-b"><?php echo $row['week']; ?></td>
+                    <!-- <td class="px-6 py-3 border-b"><?php echo $row['week']; ?></td> -->
                     <td class="px-6 py-3 border-b"><?php echo $row['day']; ?></td>
                     <td class="px-6 py-3 border-b">
                         <!-- Update and Delete buttons -->

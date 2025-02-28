@@ -75,7 +75,7 @@ if (isset($_GET['logout'])) {
         <ul class="space-y-5 font-semibold flex-grow text-center text-lg mt-6">
           <li><a href="managers.php" class="block px-4 py-3 bg-blue-600 rounded-lg hover:bg-blue-700">Manage Managers</a></li>
           <li><a href="garbage_status.php" class="block px-4 py-3 bg-blue-600 rounded-lg hover:bg-blue-700">Garbage Collection Status</a></li>
-          <li><a href="https://mon-backend.azurewebsites.net/worldmap/" class="block px-4 py-3 bg-blue-600 rounded-lg hover:bg-blue-700">Live Location</a></li>
+          <li><a href="select_lane_for_location.php" class="block px-4 py-3 bg-blue-600 rounded-lg hover:bg-blue-700">Live Location</a></li>
 
         </ul>
         <a href="?logout=true" class="block w-3/4 ml-9 px-4 text-center text-lg py-2 bg-red-600 text-white rounded hover:bg-red-800 mt-auto mb-6">Logout</a>
