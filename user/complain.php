@@ -2,71 +2,6 @@
 // Start session
 session_start();
 
-
-// Check if logout is requested
-if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
-    // Destroy the session to log out
-    session_destroy();
-    // Redirect to index.php
-    header("Location: ../index.php");
-    exit();
-}
-
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $contactNumber = $_POST['email']; // Assuming email is used for phone number
-    $category = $_POST['category'];
-    $message = $_POST['message'];
-
-    // Email configuration
-    $to = 'sujanimrajapaksha@gmail.com'; // Recipient email address
-    $subject = 'New Complaint Submission';
-    $emailMessage = "Full Name: $name\nContact Number: $contactNumber\nCategory: $category\nMessage: $message";
-    $headers = 'From: noreply@yourdomain.com' . "\r\n" . // Replace with your domain
-        'Reply-To: sujanimrajapaksha@gmail.com' . "\r\n" . // Replace with your domain
-        'X-Mailer: PHP/' . phpversion();
-
-    // Send email
-    if (mail($to, $subject, $emailMessage, $headers)) {
-        echo '<script>alert("Complaint submitted successfully. An email has been sent.");</script>';
-    } else {
-        echo '<script>alert("Failed to send email. Complaint submitted, but email delivery failed.");</script>';
-    }
-
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // ... (Get form data) ...
-
-    $mail = new PHPMailer(true);
-
-    try {
-        //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_OFF; // Enable verbose debug output
-        $mail->isSMTP(); // Send using SMTP
-        $mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
-        $mail->SMTPAuth = true; // Enable SMTP authentication
-        $mail->Username = 'your_gmail_email@gmail.com'; // SMTP username
-        $mail->Password = 'your_gmail_password'; // SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-        $mail->Port = 587; // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-
-        //Recipients
-        $mail->setFrom('your_gmail_email@gmail.com', 'Your Name');
-        $mail->addAddress('sujanimrajapaksha@gmail.com', 'Recipient Name'); // Add a recipient
-
-        //Content
-        $mail->isHTML(false); // Set email format to plain text
-        $mail->Subject = 'New Complaint Submission';
-        $mail->Body = "Full Name: $name\nContact Number: $contactNumber\nCategory: $category\nMessage: $message";
-
-        $mail->send();
-        echo '<script>alert("Complaint submitted successfully. An email has been sent.");</script>';
-    } catch (Exception $e) {
-        echo '<script>alert("Failed to send email. Mailer Error: {$mail->ErrorInfo}");</script>';
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -105,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="bg-green-100 relative">
 
-<a href="?logout=true" class="logout-btn">Logout</a>
+<a href="../index.php" class="logout-btn">Logout</a>
 
 <div class="flex">
     <div class="flex-grow p-6">
@@ -113,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h1 class="text-3xl font-bold text-green-600">Submit a Complaint</h1>
         </div>
         <div class="flex items-center justify-center">
-            <form method="POST" class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
+            <form action="https://api.web3forms.com/submit" method="POST" class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
+            	 <input type="hidden" name="access_key" value="578c1ba5-a078-420e-8208-ccb91c120ff8">
                 <h3 class="text-xl font-semibold mb-4 text-green-600">Complaint Details</h3>
 
                 <div class="mb-4">
@@ -122,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="mb-4">
-                    <label for="email" class="block mb-2 text-green-700 font-medium">Contact Number</label>
-                    <input type="text" name="email" id="email" required class="w-full p-2 border border-gray-300 rounded-lg" oninput="validatePhoneNumber(this)">
+                    <label for="tp" class="block mb-2 text-green-700 font-medium">Contact Number</label>
+                    <input type="text" name="tp" id="tp" required class="w-full p-2 border border-gray-300 rounded-lg" oninput="validatePhoneNumber(this)">
                     <p id="phoneError" class="text-red-500 text-sm"></p>
                 </div>
 
@@ -153,31 +89,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     function validatePhoneNumber(input) {
         const phoneNumber = input.value;
         const errorElement = document.getElementById('phoneError');
-        const phoneRegex12 = /^\+94\d{9}$/;
-        const phoneRegex10 = /^0\d{9}$/;
+        const phoneRegex12 = /^94\d{9}$/;
+        const phoneRegex10 = /^\d{9}$/;
 
-        if (phoneNumber.length === 12) {
+        if (phoneNumber.length === 11) {
             if (!phoneRegex12.test(phoneNumber)) {
-                errorElement.textContent = "Phone number must start with +94 and have 12 digits.";
+                errorElement.textContent = "Phone number must start with 94 and have 11 digits.";
                 input.setCustomValidity("Invalid phone number");
             } else {
                 errorElement.textContent = "";
                 input.setCustomValidity("");
             }
-        } else if (phoneNumber.length === 10) {
-            if (!phoneRegex10.test(phoneNumber)) {
-                errorElement.textContent = "Phone number must start with 0 and have 10 digits.";
-                input.setCustomValidity("Invalid phone number");
-            } else {
-                errorElement.textContent = "";
-                input.setCustomValidity("");
-            }
-        } else if (phoneNumber.length > 0){
-            errorElement.textContent = "Phone number must be 10 or 12 digits.";
-            input.setCustomValidity("Invalid phone number");
-        } else {
-            errorElement.textContent = "";
-            input.setCustomValidity("");
         }
     }
 </script>

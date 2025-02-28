@@ -1,6 +1,6 @@
 <?php
 // Include database connection
-include '../config/database.php';
+include '../../config/database.php';
 
 // Check if connection is successful
 if (!$conn) {
@@ -29,13 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $house_no = mysqli_real_escape_string($conn, $_POST['house_no']);
     $bin_no = mysqli_real_escape_string($conn, $_POST['bin_no']);    
     $address = mysqli_real_escape_string($conn, $_POST['address']);
+    $description = mysqli_real_escape_string($conn, $_POST['description']);
     $mobile_number = mysqli_real_escape_string($conn, $_POST['mobile_number']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
    
-    $insertQuery = "INSERT INTO household_registration (name, lane_no, house_no, bin_no, address, mobile_number, email, password)
-                    VALUES ('$name', '$lane_no', '$house_no', '$bin_no', '$address', '$mobile_number', '$email', '$password')";
+    $insertQuery = "INSERT INTO household_registration (name, lane_no, house_no, bin_no, address, description, mobile_number, email, password)
+                    VALUES ('$name', '$lane_no', '$house_no', '$bin_no', '$address', '$description', '$mobile_number', '$email', '$password')";
 
     if (mysqli_query($conn, $insertQuery)) {
         $successMessage = "Registration successful!";
@@ -118,12 +119,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div>
 
 					
-					
-					<div class="mb-4">
-                        <label for="bin_no" class="block font-medium">Bin Number</label>
-                        <input type="text" id="bin_no" name="bin_no" class="w-full border rounded-lg px-3 py-2 h-10" required>                    
-                    </div>
-
+				<div class="mb-4">
+    				<label for="bin_no" class="block font-medium">Bin Number</label>
+    				<input type="text" id="bin_no" name="bin_no" class="w-full border rounded-lg px-3 py-2 h-10"  title="Bin number must be in the format ###-###-###-###">
+    				
+				</div>
 					
                     <div class="mb-4">
                         <label for="address" class="block font-medium">Address</label>
@@ -134,17 +134,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="mobile_number" class="block font-medium">Mobile Number</label>
                         <input type="text" id="mobile_number" name="mobile_number" class="w-full border rounded-lg px-3 py-2 h-10" required
                         	value="<?php echo isset($staff) ? $staff['mobile'] : ''; ?>"
-					        placeholder="Enter mobile number (e.g., +94345678909)" 
-					        pattern="^(0\d{9}|\+94\d{9})$" title="Phone number must be 10 digits starting with 0 or 12 digits starting with +94"
+					        placeholder="Enter mobile number (e.g., 94345678909)" 
+					        pattern="^(94\d{9})$" title="Phone number must be 11 digits starting with 94"
 							/>
                     </div>
                     
                     
 
+
 					<div class="mb-4">
-   						 <label for="email" class="block font-medium">Email</label>
-    					<input type="email" id="email" name="email" placeholder="Enter your email" required class="w-full p-2 h-10  border border-gray-300 rounded-lg" value="<?php echo isset($manager) ? $manager['username'] : ''; ?>">
-					</div>                    
+    					<label for="email" class="block font-medium">Email</label>
+    					<input type="email" id="email" name="email" placeholder="Enter your email" required class="w-full p-2 h-10 border border-gray-300 rounded-lg" value="<?php echo isset($manager) ? htmlspecialchars($manager['username']) : ''; ?>">
+    					<?php
+    					if (isset($_POST['email'])) {
+        					$email = $_POST['email'];
+        					if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            					echo '<p style="color: red;">Invalid email format</p>';
+        					}
+    					}
+   					 	?>
+					</div>                   
                     
                     
 
