@@ -51,6 +51,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query->bind_param('i', $id);
         $query->execute();
     } // End of elseif ($action === 'delete')
+
+elseif ($action === 'send') { // Correctly aligned with other actions
+        $id = $_POST['id'];
+        
+	// Prepare and execute SQL query
+	$stmt = $conn->prepare("SELECT area.lane_no,house_no,mobile_number FROM area INNER JOIN household_registration ON area.lane_no = household_registration.lane_no WHERE area.id = ?");
+	$stmt->bind_param('i', $id);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	if ($result->num_rows > 0) {
+    		// Iterate through the fetched entries
+    		while($row = $result->fetch_assoc()) {
+       		echo "ID: " . $row["lane_no"]. " - Name: " . $row["house_no"]. " - Mobile: " . $row["mobile_number"]. "<br>";
+		$url = 'https://app.notify.lk/api/v1/send?user_id=29099&api_key=04Q0g5ASxkJa6Y4IAWmf&sender_id=NotifyDEMO&to='. $row["mobile_number"].'&message=Waste Collection Today. Lane'. $row["lane_no"];
+		//$data = file_get_contents($url);
+			echo $url;
+    		}
+	} else {
+    		echo "0 results";
+	}	     
+
+		     
+    } // End of elseif ($action === 'send')
 } // End of if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
 
@@ -131,7 +155,7 @@ $areas = $conn->query("SELECT * FROM area");
                         						
 						<!-- Send Message -->
 						<form method="POST" onsubmit="return confirmSend()">
-						    <input type="hidden" name="action" value="">
+						    <input type="hidden" name="action" value="send">
 						    <input type="hidden" name="id" value="<?= $area['id'] ?>">
 						    <button type="submit" class="bg-red-500 text-white px-4 py-1 ml-7 hover:bg-red-600">Send</button>
 						</form> 
