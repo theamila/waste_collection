@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 27, 2025 at 06:01 PM
+-- Generation Time: Feb 28, 2025 at 01:22 PM
 -- Server version: 8.0.40
 -- PHP Version: 8.3.14
 
@@ -59,17 +59,18 @@ CREATE TABLE IF NOT EXISTS `area` (
   `description` text NOT NULL,
   `no_of_houses` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `area`
 --
 
 INSERT INTO `area` (`id`, `lane_no`, `unit_no`, `description`, `no_of_houses`) VALUES
-(11, '20/C', 3, 'Kaduwela', 37),
-(13, '21/A', 4, 'Kiribathgoda', 60),
-(15, '20/A', 5, 'Kiribathgoda', 43),
-(16, '26/B', 1, 'Kiribathgoda', 43);
+(11, '1', 1, 'Asiri Mawatha', 34),
+(13, '2', 2, 'Samagi Mawatha', 60),
+(15, '3', 3, 'Wasana Mawatha', 43),
+(16, '4', 4, 'Perera Mawatha', 40),
+(17, '5', 5, 'Dalugama Mawatha', 30);
 
 -- --------------------------------------------------------
 
@@ -94,11 +95,11 @@ CREATE TABLE IF NOT EXISTS `assign_staff` (
 --
 
 INSERT INTO `assign_staff` (`id`, `employee_no`, `vehicle_no`, `date`, `lane_no`) VALUES
-(5, 'E120', 'V001', '2025-02-10', '26/B'),
-(7, 'E121', 'V002', '2025-02-15', '26/C'),
-(8, 'E121', 'V002', '2025-02-15', '26/C'),
-(9, 'E121', 'V002', '2025-02-15', '26/C'),
-(11, 'E121', 'V002', '2025-02-15', '26/C');
+(5, 'E120', 'V001', '2025-02-10', '1'),
+(7, 'E121', 'V002', '2025-02-15', '2'),
+(8, 'E103', 'V006', '2025-02-15', '1'),
+(9, 'E99', 'V002', '2025-02-15', '2'),
+(11, 'E100', 'V001', '2025-02-15', '1');
 
 -- --------------------------------------------------------
 
@@ -115,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `cleaning_staff` (
   `type` enum('Collector','Driver') NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `employee_no` (`employee_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cleaning_staff`
@@ -125,7 +126,10 @@ INSERT INTO `cleaning_staff` (`id`, `employee_no`, `name`, `mobile`, `type`) VAL
 (1, 'E121', 'Saman Kumara Rajakaruna', '+94719796759', 'Driver'),
 (17, 'E120', 'Dilshan Kumara', '0718987654', 'Collector'),
 (26, 'E100', 'Dumindu Silva', '0719876541', 'Driver'),
-(27, 'E99', 'Nimal Kumara', '0719876543', 'Collector');
+(27, 'E99', 'Nimal Kumara', '0719876543', 'Collector'),
+(28, 'E101', 'Thusitha Perera', '+94714992904', 'Driver'),
+(29, 'E102', 'Nuwan Silva', '+94718987654', 'Driver'),
+(30, 'E103', 'Nuwan Perera', '+94718987655', 'Collector');
 
 -- --------------------------------------------------------
 
@@ -137,20 +141,9 @@ DROP TABLE IF EXISTS `garbage_collection_status`;
 CREATE TABLE IF NOT EXISTS `garbage_collection_status` (
   `date` date NOT NULL,
   `time` time NOT NULL,
-  `bin_no` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `bin_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `remaining_weight` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `garbage_collection_status`
---
-
-INSERT INTO `garbage_collection_status` (`date`, `time`, `bin_no`, `remaining_weight`) VALUES
-('2024-07-29', '08:00:00', '115-197-142-244', 350),
-('2024-07-29', '09:30:00', '35-129-119-15', 600),
-('2024-07-29', '11:00:00', '115-197-142-200', 200),
-('2024-07-29', '13:00:00', '35-129-119-150', 750),
-('2024-07-29', '15:30:00', '115-197-142-288', 400);
 
 -- --------------------------------------------------------
 
@@ -171,23 +164,15 @@ CREATE TABLE IF NOT EXISTS `household_registration` (
   `email` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `household_registration`
 --
 
 INSERT INTO `household_registration` (`id`, `name`, `lane_no`, `house_no`, `bin_no`, `address`, `description`, `mobile_number`, `email`, `password`) VALUES
-(7, 'Esitha Jayawardana', '26/ciawion', '196/1', '0', 'Samagi mw, Malagoda', '', '0123445664', 'esi@gmail.com', 'aaa'),
-(11, 'vsdvsd', '26/A', 'vsdvsdv', '0', 'dvdvsdvs', '', 'sdvsdv', '', 'dsvsdv'),
-(12, 'Sujani', '26/A', '13', '0', 'No.13, Nagala, Bibile', '', '0719796759', '', 'suja'),
-(13, 'sujani', '26/B', '13', '115-197-142-244', 'Kaduwela', '', '94719796759', 'su@gmail.com', 'suja'),
-(14, 'Ria', '20/B', '7', '115-197-142-280', 'asd', '', '94712339087', 'ria@gmail.com', '123'),
-(15, 'Diana', '20/B', '8', '115-197-142-000', 'sss', '', '94718987654', 'diana@gmail.com', ''),
-(16, 'Ima', '20/B', '9', '115-197-142-001', 'kkk', '', '94987654321', 'ima@gmail.com', ''),
-(17, 'Parami Perera', '20/B', '11', '115-197-142-003', 'asw', '', '94987654321', 'para@gmail.com', '123'),
-(18, 'Anusha Perera', '26/B', '8', '115-197-142-244', 'Kaduwela', 'Kaduwela', '94714992904', 'anu@gmail.com', '123'),
-(19, 'Diana', '26/B', '12', '115-197-142-288', 'sss', NULL, '94718987654', 'd@gmail.com', '123');
+(1, 'Lahiru', '1', '1', '35-129-119-15', 'No.25,Asiri Mawatha,Maththegoda', 'Asiri mawatha', '94774436904', 'lahirumadsnka@gmail.com', '123'),
+(2, 'Ayesha', '1', '2', '201-159-185-15', 'No.24,Asiri Mawatha,Maththegoda', 'Asiri mawatha', '94710447446', 'ayeshanpathirana@gmail.com', '123');
 
 -- --------------------------------------------------------
 
@@ -198,7 +183,7 @@ INSERT INTO `household_registration` (`id`, `name`, `lane_no`, `house_no`, `bin_
 DROP TABLE IF EXISTS `location`;
 CREATE TABLE IF NOT EXISTS `location` (
   `lane_no` varchar(50) NOT NULL,
-  `link` varchar(200) NOT NULL
+  `link` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -206,11 +191,11 @@ CREATE TABLE IF NOT EXISTS `location` (
 --
 
 INSERT INTO `location` (`lane_no`, `link`) VALUES
-('26/A', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1'),
-('26/B', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=2'),
-('25/C', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=3'),
-('20/A', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=4'),
-('20/B', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=5');
+('1', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1'),
+('2', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1'),
+('3', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1'),
+('4', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1'),
+('5', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1');
 
 -- --------------------------------------------------------
 
@@ -231,9 +216,9 @@ CREATE TABLE IF NOT EXISTS `managers` (
 --
 
 INSERT INTO `managers` (`id`, `username`, `password`) VALUES
-(1, 'manager1@m.com', 'aaa'),
-(2, 'manager2@m.com', 'aaa'),
-(3, 'ama@yahoo.com', 'ama');
+(1, 'Amal', 'qqq'),
+(2, 'Silva', 'aaa'),
+(3, 'Ameesha', 'Amali');
 
 -- --------------------------------------------------------
 
@@ -250,18 +235,19 @@ CREATE TABLE IF NOT EXISTS `schedule` (
   `week` enum('Every week','First week','Second week','Third week','Fourth week') NOT NULL,
   `vehicle_no` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `schedule`
 --
 
 INSERT INTO `schedule` (`id`, `lane_no`, `garbage_type`, `day`, `week`, `vehicle_no`) VALUES
-(3, '26/C', 'E-waste', '2024-12-20', 'Third week', 'V001'),
-(4, '26/A', 'Plastic', '2024-12-19', 'Every week', 'V001'),
-(5, '26/A', 'Biodegradable', '2024-12-19', 'Every week', 'V001'),
-(7, '26/A', 'Plastic', '2024-12-19', 'Every week', 'V001'),
-(9, '26/B', 'Plastic', '2025-02-18', 'First week', 'V001');
+(3, '1', 'Biodegradable', '2025-03-01', 'Third week', 'V001'),
+(4, '1', 'E-waste', '2025-03-15', 'Every week', 'V006'),
+(5, '2', 'Biodegradable', '2025-03-12', 'Every week', 'V001'),
+(7, '2', 'Plastic', '2025-03-14', 'Every week', 'V001'),
+(9, '2', 'E-waste', '2025-03-25', 'First week', 'V004'),
+(10, '1', 'Plastic', '2025-03-04', 'Every week', 'V002');
 
 -- --------------------------------------------------------
 
@@ -278,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `vehicle` (
   `status` enum('Available','Out of service','In service') NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `vehicle_no` (`vehicle_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `vehicle`
@@ -289,7 +275,8 @@ INSERT INTO `vehicle` (`id`, `vehicle_no`, `capacity`, `date`, `status`) VALUES
 (2, 'V002', 1200, '2022-05-10', 'Available'),
 (3, 'V003', 1500, '2024-03-02', 'In service'),
 (4, 'V005', 1100, '2023-07-25', 'Out of service'),
-(7, 'V010', 1200, '2024-04-10', 'In service');
+(7, 'V006', 1200, '2024-04-10', 'Available'),
+(8, 'V004', 4000, '2023-07-11', 'Available');
 
 --
 -- Constraints for dumped tables
