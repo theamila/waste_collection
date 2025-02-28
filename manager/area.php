@@ -51,16 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query->bind_param('i', $id);
         $query->execute();
     } // End of elseif ($action === 'delete')
-elseif ($action === 'send') { // Correctly aligned with other actions
-        $id = $_POST['id'];
-        $query = $conn->prepare("SELECT * FROM area WHERE id = ?");
-        $query->bind_param('i', $id);
-        $query->execute();
-
-	$url = 'https://app.notify.lk/api/v1/send?user_id=29099&api_key=04Q0g5ASxkJa6Y4IAWmf&sender_id=NotifyDEMO&to=94772288579&message=Test';
-	$data = file_get_contents($url);		     
-    } // End of elseif ($action === 'send')
-	
 } // End of if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
 
@@ -141,7 +131,7 @@ $areas = $conn->query("SELECT * FROM area");
                         						
 						<!-- Send Message -->
 						<form method="POST" onsubmit="return confirmSend()">
-						    <input type="hidden" name="action" value="send">
+						    <input type="hidden" name="action" value="">
 						    <input type="hidden" name="id" value="<?= $area['id'] ?>">
 						    <button type="submit" class="bg-red-500 text-white px-4 py-1 ml-7 hover:bg-red-600">Send</button>
 						</form> 

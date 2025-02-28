@@ -59,9 +59,9 @@
           <i class="bx bx-chevron-down mr-2 text-xl"></i>
         </button>
         <div id="userDropdown" class="hidden mt-2 space-y-2">
-          <a href="./user/login.php" class="block bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700">Household Registration</a>
-          <a href="#" class="block bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700">Schedule</a>
-          <a href="#" class="block bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700">Complaints</a>
+          <a href="./user/main_login.php" class="block bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700">Household Registration</a>
+          <a href="./user/view_schedules.php" class="block bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700">Schedule</a>
+          <a href="./user/complain.php" class="block bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700">Complaints</a>
         </div>
       </div>
     </div>

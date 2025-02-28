@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql = "UPDATE managers SET username='$username', password='$password' WHERE id=$id";
         $conn->query($sql);
     } elseif (isset($_POST['delete'])) {
+        
         // Delete operation
         $id = $_POST['id'];
         $sql = "DELETE FROM managers WHERE id=$id";
@@ -68,7 +69,7 @@ $result = $conn->query($sql);
                 <h3 id="form-title" class="text-xl font-semibold mb-4 text-blue-500"><?php echo isset($manager) ? "Update Manager" : "Create New Manager"; ?></h3>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label for="username" class="block mb-2">Username</label>
+                        <label for="username" class="block mb-2">Email</label>
                         <input type="email" name="username" id="username" required class="w-full p-2 border border-gray-300 rounded-lg" value="<?php echo isset($manager) ? $manager['username'] : ''; ?>">
                     </div>
                     <div>
@@ -90,7 +91,7 @@ $result = $conn->query($sql);
             <thead>
                 <tr class="bg-blue-500">
                     <th class="px-6 py-3 border-b text-white">ID</th>
-                    <th class="px-6 py-3 border-b text-white">Username</th>
+                    <th class="px-6 py-3 border-b text-white">Email</th>
                     <th class="px-6 py-3 border-b text-white">Actions</th>
                 </tr>
             </thead>
@@ -103,11 +104,11 @@ $result = $conn->query($sql);
                         <!-- Use flex to align buttons and center them -->
                         <div class="flex justify-center space-x-4">
                             <a href="managers.php?id=<?php echo $row['id']; ?>" class="bg-black text-white px-4 py-1 hover:bg-gray-600">Update</a>
-                            <form action="managers.php" method="POST" class="inline-block">
-                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                <button type="submit" name="delete" class="bg-red-600 text-white px-4 py-1 hover:bg-red-500">Delete</button>
-                            </form>
-                        </div>
+								<form action="managers.php" method="POST" class="inline-block" onsubmit="return confirmDelete();">
+    								<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+    								<button type="submit" name="delete" class="bg-red-600 text-white px-4 py-1 hover:bg-red-500">Delete</button>
+								</form>                        
+						</div>
                     </td>
                 </tr>
                 <?php endwhile; ?>
@@ -116,6 +117,16 @@ $result = $conn->query($sql);
         </table>
     </div>
 </div>
+
+        <!-- JavaScript Confirmation Script -->
+    <script>
+        // Function to ask for deletion confirmation
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this manager?");
+        }
+    </script>
+
+
 
 </body>
 </html>
