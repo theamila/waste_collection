@@ -1,6 +1,6 @@
 <?php
 // Include database connection
-include '../../config/database.php';
+include '../config/database.php';
 
 // Check if connection is successful
 if (!$conn) {
