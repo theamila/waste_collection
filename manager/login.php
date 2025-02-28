@@ -4,7 +4,7 @@ session_start();
 
 // Handle login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
+    $username = $_POST['name'];
     $password = $_POST['password'];
 
     $query = $conn->prepare("SELECT * FROM managers WHERE username = ?");
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager Login</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="change3.dat"></script>
 </head>
 <body class="bg-orange-500 flex items-center justify-center min-h-screen ">
     <!-- Back Button -->
@@ -52,14 +52,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
         <form method="POST">
             <div class="mb-4">
-                <label class="block">Email</label>
-                <input type="text" name="username" class="w-full border rounded-lg px-3 py-2" required>
-            </div>
+    					<label for="name" class="block">User Name</label>
+    					<input type="name" id="name" name="name" placeholder="Enter your email" required class="w-full p-2 h-10 border border-gray-300 rounded-lg" value="<?php echo isset($manager) ? htmlspecialchars($manager['username']) : ''; ?>">
+					</div>                   
+                    
             <div class="mb-6">
                 <label class="block">Password</label>
                 <input type="password" name="password" class="w-full border rounded-lg px-3 py-2" required>
             </div>
             <button type="submit" class="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600">Login</button>
+            <div class="text-center">
+           	            <a href="changepass.php" class="text-center text-blue-400 hover:text-blue-800 text-1xl">
+	            	Change Your Password
+	            </a>
+	            </div>
+            
         </form>
     </div>
 </body>

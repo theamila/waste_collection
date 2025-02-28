@@ -90,7 +90,7 @@ if (isset($_GET['id'])) {
                         <input type="number" name="capacity" id="capacity" value="<?php echo $vehicle ? $vehicle['capacity'] : ''; ?>" required class="w-full p-2 border border-gray-300 rounded-lg">
                     </div>
                     <div>
-                        <label for="date" class="block mb-2">Date of Issue</label>
+                        <label for="date" class="block mb-2">Registered Date</label>
                         <input type="date" name="date" id="date" value="<?php echo $vehicle ? $vehicle['date'] : ''; ?>" required class="w-full p-2 border border-gray-300 rounded-lg">
                     </div>
                     <div>
@@ -123,7 +123,7 @@ if (isset($_GET['id'])) {
                 <tr class="bg-orange-500">
                     <th class="px-6 py-3 border-b text-white">Vehicle No</th>
                     <th class="px-6 py-3 border-b text-white">Capacity</th>
-                    <th class="px-6 py-3 border-b text-white">Date of Issue</th>
+                    <th class="px-6 py-3 border-b text-white">Registered Date</th>
                     <th class="px-6 py-3 border-b text-white">Status</th>
                     <th class="px-6 py-3 border-b text-white">Actions</th>
                 </tr>

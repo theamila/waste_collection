@@ -69,8 +69,8 @@ $result = $conn->query($sql);
                 <h3 id="form-title" class="text-xl font-semibold mb-4 text-blue-500"><?php echo isset($manager) ? "Update Manager" : "Create New Manager"; ?></h3>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label for="username" class="block mb-2">Email</label>
-                        <input type="email" name="username" id="username" required class="w-full p-2 border border-gray-300 rounded-lg" value="<?php echo isset($manager) ? $manager['username'] : ''; ?>">
+                        <label for="username" class="block mb-2">User Name</label>
+                        <input type="name" name="username" id="username" required class="w-full p-2 border border-gray-300 rounded-lg" value="<?php echo isset($manager) ? $manager['username'] : ''; ?>">
                     </div>
                     <div>
                         <label for="password" class="block mb-2">Password</label>

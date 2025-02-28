@@ -28,7 +28,7 @@ if ($garbageResult->num_rows > 0) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    print_r($_POST);
+    //print_r($_POST); // Removed for security reasons in production
 
     $name = $_POST['name'];
     $lane_no = $_POST['lane_no'];
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'];
 
     if (empty($description)) {
-        echo "Error: Description cannot be empty.";
+        echo "<script>alert('Error: Description cannot be empty.'); window.location.href = window.location.href;</script>";
         exit;
     }
 
@@ -49,18 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updateQuery = $conn->prepare("UPDATE household_registration SET name = ?, lane_no = ?, house_no = ?, bin_no = ?, address = ?, description = ?, mobile_number = ?, email = ?, password = ? WHERE email = ?");
     $updateQuery->bind_param("ssssssssss", $name, $lane_no, $house_no, $bin_no, $address, $description, $mobile_number, $email, $password, $loggedInEmail);
 
-    var_dump($name, $lane_no, $house_no, $bin_no, $address, $description, $mobile_number, $email, $password, $loggedInEmail);
-    var_dump($loggedInEmail);
-
     if ($updateQuery->execute()) {
         $updateMessage = "Household details successfully updated!";
+        echo "<script>alert('$updateMessage'); window.location.href = window.location.href;</script>";
         $householdResult = $conn->prepare("SELECT * FROM household_registration WHERE email = ?");
         $householdResult->bind_param("s", $loggedInEmail);
         $householdResult->execute();
         $householdResult = $householdResult->get_result();
     } else {
         $updateMessage = "Error updating household details: " . $updateQuery->error;
-        echo "Error: " . $updateQuery->error;
+        echo "<script>alert('$updateMessage'); window.location.href = window.location.href;</script>";
     }
 
     $updateQuery->close();
@@ -141,10 +139,7 @@ $row = $householdResult->fetch_assoc();
             </div>
         </form>
 
-        <?php if (!empty($updateMessage)): ?>
-            <p class="bg-green-200 text-green-800 p-3 rounded mb-4"><?= $updateMessage ?></p>
-        <?php endif; ?>
-
+        
         <div class="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 class="text-3xl font-semibold mb-4 text-green-600 font-bold">Garbage Collection Status</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -65,14 +65,12 @@ elseif ($action === 'send') { // Correctly aligned with other actions
     		// Iterate through the fetched entries
     		while($row = $result->fetch_assoc()) {
        		//echo "ID: " . $row["lane_no"]. " - Name: " . $row["house_no"]. " - Mobile: " . $row["mobile_number"]. "<br>";
-		$url = 'https://app.notify.lk/api/v1/send?user_id=29099&api_key=04Q0g5ASxkJa6Y4IAWmf&sender_id=NotifyDEMO&to='. $row["mobile_number"].'&message=Waste Collection Today. Lane'. $row["lane_no"];
+		$url = 'https://app.notify.lk/api/v1/send?user_id=29099&api_key=04Q0g5ASxkJa6Y4IAWmf&sender_id=NotifyDEMO&to='. $row["mobile_number"].'&message=Waste Collection Tommorow. Lane'. $row["lane_no"];
 		$data = file_get_contents($url);
-			echo "Message Sent";
+			
     		}
-	} else {
-    		echo "0 results";
-	}	     
-
+    		echo "Message Sent successfully...!";
+	} 
 		     
     } // End of elseif ($action === 'send')
 } // End of if ($_SERVER['REQUEST_METHOD'] === 'POST')
