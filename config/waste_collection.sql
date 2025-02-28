@@ -181,13 +181,13 @@ INSERT INTO `household_registration` (`id`, `name`, `lane_no`, `house_no`, `bin_
 (7, 'Esitha Jayawardana', '26/ciawion', '196/1', '0', 'Samagi mw, Malagoda', '', '0123445664', 'esi@gmail.com', 'aaa'),
 (11, 'vsdvsd', '26/A', 'vsdvsdv', '0', 'dvdvsdvs', '', 'sdvsdv', '', 'dsvsdv'),
 (12, 'Sujani', '26/A', '13', '0', 'No.13, Nagala, Bibile', '', '0719796759', '', 'suja'),
-(13, 'sujani', '26/B', '13', '115-197-142-244', 'Kaduwela', '', '0719796759', 'su@gmail.com', 'suja'),
-(14, 'Ria', '20/B', '7', '115-197-142280', 'asd', '', '0712339087', 'ria@gmail.com', '123'),
-(15, 'Diana', '20/B', '8', '115-197-142-000', 'sss', '', '0718987654', 'diana@gmail.com', ''),
-(16, 'Ima', '20/B', '9', '115-197-142-001', 'kkk', '', '0987654321', 'ima@gmail.com', ''),
-(17, 'Parami Perera', '20/B', '11', '115-197-142-003', 'asw', '', '0987654321', 'para@gmail.com', '123'),
-(18, 'Anusha Perera', '26/B', '8', '115-197-142-244', 'Kaduwela', 'Kaduwela', '0714992904', 'anu@gmail.com', '123'),
-(19, 'Diana', '26/B', '12', '115-197-142-288', 'sss', NULL, '0718987654', 'd@gmail.com', '123');
+(13, 'sujani', '26/B', '13', '115-197-142-244', 'Kaduwela', '', '94719796759', 'su@gmail.com', 'suja'),
+(14, 'Ria', '20/B', '7', '115-197-142-280', 'asd', '', '94712339087', 'ria@gmail.com', '123'),
+(15, 'Diana', '20/B', '8', '115-197-142-000', 'sss', '', '94718987654', 'diana@gmail.com', ''),
+(16, 'Ima', '20/B', '9', '115-197-142-001', 'kkk', '', '94987654321', 'ima@gmail.com', ''),
+(17, 'Parami Perera', '20/B', '11', '115-197-142-003', 'asw', '', '94987654321', 'para@gmail.com', '123'),
+(18, 'Anusha Perera', '26/B', '8', '115-197-142-244', 'Kaduwela', 'Kaduwela', '94714992904', 'anu@gmail.com', '123'),
+(19, 'Diana', '26/B', '12', '115-197-142-288', 'sss', NULL, '94718987654', 'd@gmail.com', '123');
 
 -- --------------------------------------------------------
 
@@ -207,10 +207,10 @@ CREATE TABLE IF NOT EXISTS `location` (
 
 INSERT INTO `location` (`lane_no`, `link`) VALUES
 ('26/A', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1'),
-('26/B', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1'),
-('25/C', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1'),
-('20/A', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1'),
-('20/B', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=1');
+('26/B', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=2'),
+('25/C', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=3'),
+('20/A', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=4'),
+('20/B', 'https://mon-backend.azurewebsites.net/worldmap?unit_id=5');
 
 -- --------------------------------------------------------
 
